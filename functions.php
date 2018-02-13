@@ -123,11 +123,30 @@ function wp_bootstrap_starter_scripts() {
 
 	wp_enqueue_script( 'wp-bootstrap-starter-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
 
+	// REGISTER CUSTOM STYLES
+	wp_register_style('wp-bootstrap-starter_bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css' );
+
+	
+	// ENQUEUE CUSTOM STYLES
+	wp_enqueue_style( 'wp-bootstrap-starter_bootstrap' );
+
+
+	// REGISTER CUSTOM SCRIPTS
+	wp_register_script( 'wp-bootstrap-starter_bootstrap_js', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), false, true );
+
+
+	//ENQUEUE CUSTOM SCRIPTS
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'wp-bootstrap-starter_bootstrap_js' );
+
+
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'wp_bootstrap_starter_scripts' );
+
+
 
 /**
  * Implement the Custom Header feature.
@@ -157,8 +176,14 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 }
 
 /**
+ * Load custom WordPress nav walker.
+ */
+require get_template_directory() . '/inc/bootstrap-wp-navwalker.php';
+
+/**
  * Load WooCommerce compatibility file.
  */
 if ( class_exists( 'WooCommerce' ) ) {
 	require get_template_directory() . '/inc/woocommerce.php';
 }
+
